@@ -43,21 +43,6 @@ Always respect website terms of service and robots.txt before scraping.
 
 ---
 
-## 📂 Structure (example)
-
-```
-
-Python-Scrapper/
-│── basic-scraper/
-│── api-scraper/
-│── dynamic-scraper/
-│── utils/
-└── README.md
-
-```
-
----
-
 ## 📬 Contributions
 
 Contributions are welcome.  
