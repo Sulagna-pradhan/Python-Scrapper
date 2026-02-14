@@ -6,9 +6,9 @@ import requests
 from telethon import TelegramClient, errors
 
 # --- CONFIGURATION ---
-API_ID = ''
-API_HASH = ''
-IMGBB_API_KEY = '' 
+API_ID = '30409572'
+API_HASH = '5ea5824edd15f3d22ffe7e0d3379ea71'
+IMGBB_API_KEY = '4ffd05da73eb47bea1ab354dba3b64af' 
 METADATA_FILE = 'image_metadata.json'
 BASE_SAVE_FOLDER = 'downloads'
 
