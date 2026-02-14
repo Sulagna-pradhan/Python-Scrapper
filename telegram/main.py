@@ -12,7 +12,7 @@ from telegram.ext import (
 
 # ================== CONFIG ==================
 
-BOT_TOKEN = "8111668670:AAHYbYB3-sUb_Cok9YNVoKYensT4eobNIwI"  # <-- paste locally
+BOT_TOKEN = ""  # <-- paste locally
 IDLE_TIMEOUT = 10  # seconds
 
 # ================== USER INPUT ==================
