@@ -4,54 +4,39 @@ from supabase import create_client
 
 load_dotenv()
 
-# Initialize Supabase Client
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_KEY")
 supabase = create_client(url, key)
 
-def add_movie(msg_id, title, link):
-    """
-    Inserts a new movie or updates an existing one if message_id exists.
-    This prevents 'Duplicate Key' errors during re-scraping.
-    """
+def add_movie(msg_id, title, full_title, link):
+    """Saves both a clean searchable title and a detailed display title."""
     try:
         supabase.table("movies").upsert(
             {
                 "message_id": msg_id,
-                "title": title,
+                "title": title,         # For A-Z and Search Logic
+                "full_title": full_title, # For User Display (S01, 1080p, etc.)
                 "link": link
             },
-            on_conflict="message_id" # Magic line that updates existing data
+            on_conflict="message_id" 
         ).execute()
     except Exception as e:
         print(f"Error upserting {title}: {e}")
 
 def search_movies(query):
-    """
-    Smarter search: 
-    1. Looks for exact phrase match.
-    2. If fails, splits the query into words to find related results.
-    """
-    # 1. Try Exact/Phrase Match first (Highest Priority)
-    exact_response = supabase.table("movies").select("*").ilike("title", f"%{query}%").execute()
-    
-    if exact_response.data:
-        return exact_response.data
+    """Prioritized search: Phrase match first, then keyword split."""
+    exact = supabase.table("movies").select("*").ilike("title", f"%{query}%").execute()
+    if exact.data:
+        return exact.data
 
-    # 2. Related Match (Fallback)
-    # Splits the search into words to find partial matches
     words = query.split()
     if len(words) > 1:
-        # Build a filter that matches ANY of the words provided
         search_filter = " or ".join([f"title.ilike.%{word}%" for word in words])
-        related_response = supabase.table("movies").select("*").or_(search_filter).execute()
-        return related_response.data
-        
+        related = supabase.table("movies").select("*").or_(search_filter).execute()
+        return related.data
     return []
 
-def get_all_movies():
-    """
-    Retrieves all movies sorted alphabetically for the index.
-    """
-    response = supabase.table("movies").select("*").order("title").execute()
+def get_movies_by_letter(letter):
+    """Fetches movies for the A-Z Index."""
+    response = supabase.table("movies").select("*").ilike("title", f"{letter}%").order("title").execute()
     return response.data
