@@ -1,4 +1,0 @@
-telethon
-python-telegram-bot
-supabase
-python-dotenv

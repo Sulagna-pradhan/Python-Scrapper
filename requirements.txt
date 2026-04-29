@@ -1,0 +1,12 @@
+beautifulsoup4
+flask
+fpdf2
+playwright
+python-docx
+python-dotenv
+python-telegram-bot
+requests
+supabase
+telethon
+yt-dlp
+Werkzeug
