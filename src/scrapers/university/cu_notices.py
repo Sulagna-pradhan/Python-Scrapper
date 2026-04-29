@@ -66,4 +66,5 @@ def scrape_notices():
 
         print(f"Scraped {len(notices)} notices")
 
-scrape_notices()
+if __name__ == "__main__":
+    scrape_notices()
